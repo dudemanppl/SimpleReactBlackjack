@@ -1,4 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
+import App from './components/App.jsx';
 
-render('hello world', document.getElementById('main'));
+render(<App />, document.getElementById('main'));

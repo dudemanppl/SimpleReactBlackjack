@@ -11,7 +11,7 @@ const Splash = ({ setHasUser }) => {
   };
 
   return (
-    <div className={styles.splashWrapper}>
+    <div className={styles.splashContainer}>
       <form className={styles.usernameForm} onSubmit={saveUsername}>
         <label htmlFor="username">Input a username!</label>
         <input

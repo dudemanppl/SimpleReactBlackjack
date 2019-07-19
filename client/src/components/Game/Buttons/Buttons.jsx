@@ -4,8 +4,10 @@ import styles from './buttons.css';
 const Buttons = ({ drawCard }) => {
   return (
     <div className={styles.buttonContainer}>
-      <button onClick={() => drawCard(1)}>Hit</button>
-      <button>Stand</button>
+      <div className={styles.button} onClick={() => drawCard(1)}>
+        Hit
+      </div>
+      <div className={styles.button}>Stand</div>
     </div>
   );
 };

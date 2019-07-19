@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './game.css';
+import GameSplash from './GameSplash/GameSplash.jsx';
 import Buttons from './Buttons/Buttons.jsx';
 import Cards from './Cards/Cards.jsx';
 
@@ -55,7 +56,7 @@ const Game = () => {
     <div className={styles.gameContainer}>
       {/* <div>{JSON.stringify(userDeck)}</div> */}
       <Cards userDeck={userDeck} />
-      {!gameStart && <button onClick={startNewGame}>Start Game!</button>}
+      {!gameStart && <GameSplash startNewGame={startNewGame} />}
       {gameStart && <Buttons drawCard={drawCard} />}
     </div>
   );

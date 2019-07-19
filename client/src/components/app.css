@@ -3,4 +3,10 @@
   flex-direction: column;
   min-height: 100%;
   min-width: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(58, 196, 58, 1) 7%,
+    rgba(35, 145, 35, 1) 45%,
+    rgba(0, 100, 0, 1) 78%
+  );
 }

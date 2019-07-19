@@ -1,0 +1,15 @@
+.button {
+  font-family: sans-serif;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+  color: white;
+  font-size: 90px;
+  text-shadow: 3px 3px 6px black;
+  margin: 40px;
+  transition: all 0.14s ease-in-out;
+}
+
+.button:hover {
+  transform: scale(1.1);
+}

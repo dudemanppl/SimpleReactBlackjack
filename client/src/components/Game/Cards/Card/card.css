@@ -1,18 +1,14 @@
 .cardContainer {
   border: 2px solid rgb(32, 32, 32);
-  border-radius: 10px;
-  box-shadow: 18px 12px 14px rgba(60, 60, 60, 0.8);
+  border-radius: 12px;
+  box-shadow: 13px 10px 10px rgba(60, 60, 60, 0.8);
   height: 310px;
   width: 222px;
+  margin: 15px;
 }
 
 .card {
-  /* background-image : black; */
   position: relative;
   top: -2px;
   left: -2px;
-  box-shadow: 10px;
-  /* height: 324px; */
-  /* width: 224px; */
-  overflow: hidden;
 }

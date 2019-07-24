@@ -5,14 +5,13 @@
 
 .button {
   font-family: sans-serif;
-  text-align: center;
   -webkit-text-fill-color: white;
-  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: black;
-  color: white;
+  text-align: center;
+  font-weight: bold;
   font-size: 60px;
-  text-shadow: 3px 3px 6px black;
-  margin: 40px;
+  text-shadow: 3px 3px 0px black;
   transition: all 0.14s ease-in-out;
 }
 
@@ -22,8 +21,15 @@
 
 .logo {
   text-align: center;
-  font-size: 180px;
   position: relative;
+  margin-bottom: 120px;
+  font-size: 180px;
+  font-weight: bold;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 4px;
+  -webkit-text-stroke-color: rgb(40, 40, 40);
+  transform: skew(0deg, -6deg);
   background-image: linear-gradient(
     170deg,
     rgba(196, 178, 0, 1) 12%,
@@ -31,18 +37,4 @@
     rgba(255, 255, 255, 1) 48%,
     rgba(196, 178, 0, 1) 66%
   );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transform: skew(0deg, -6deg);
-  margin-bottom: 40px;
-}
-
-.logo:after {
-  background: none;
-  content: attr(data-text);
-  left: 0;
-  top: 0;
-  position: absolute;
-  z-index: -1;
-  text-shadow: 3px 3px 0px white;
 }

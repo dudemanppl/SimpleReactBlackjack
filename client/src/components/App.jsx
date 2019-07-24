@@ -4,19 +4,25 @@ import styles from './app.css';
 import Game from '../components/Game/Game.jsx';
 
 const App = () => {
-  const [hasUser, setHasUser] = useState(true);
-  const username = localStorage.getItem('username');
+  // testing some ideas of local persistance of user/deck_id to continue the game 
+
+  // const [hasUser, setHasUser] = useState(true);
+  // const username = localStorage.getItem('username');
   // const deck_id = localStorage.getItem('deck_id');
 
-  useEffect(() => {
-    setHasUser(!!username);
-  }, []);
+  // useEffect(() => {
+  //   setHasUser(!!username);
+  // }, []);
 
   return (
     <div className={styles.appContainer}>
-      {/* <div>Welcome back {username}!</div> */}
+      {' '}
+      */}
+      {/* 
+      // testing persistance of user and deck ID
+      <div>Welcome back {username}!</div>
+      {!hasUser && <Splash setHasUser={setHasUser} />} */}
       <Game />
-      {/* {!hasUser && <Splash setHasUser={setHasUser} />} */}
     </div>
   );
 };

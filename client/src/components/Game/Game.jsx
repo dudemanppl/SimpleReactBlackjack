@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './game.css';
 import GameSplash from './GameSplash/GameSplash.jsx';
-import Buttons from './Buttons/Buttons.jsx';
+import LowerUI from './LowerUI/LowerUI.jsx';
 import Cards from './Cards/Cards.jsx';
 
 const Game = () => {
@@ -19,6 +19,7 @@ const Game = () => {
     });
   };
 
+  // makes api call to get a certain amount of cards, returns data wrangled array with image and value
   const drawCard = num => {
     axios.get(`${deckOfCardsAPIURL}/${deckID}/draw/?count=${num}`).then(({ data }) => {
       const cards = data.cards.map(card => {
@@ -43,21 +44,23 @@ const Game = () => {
     }, 0);
   };
 
+  // sets conditonal rendering of game to show up, draws 2 cards from the deck
   const startNewGame = () => {
     setGameStart(true);
     drawCard(2);
   };
 
+  // gets new deck on new game
   useEffect(() => getNewDeck(), []);
 
-  useEffect(() => setCardSum(getCardSum()));
+  // runs sum checker every time userDeck is updated
+  useEffect(() => setCardSum(getCardSum()), [userDeck]);
 
   return (
     <div className={styles.gameContainer}>
-      {/* <div>{JSON.stringify(userDeck)}</div> */}
       <Cards userDeck={userDeck} />
       {!gameStart && <GameSplash startNewGame={startNewGame} />}
-      {gameStart && <Buttons drawCard={drawCard} />}
+      {gameStart && <LowerUI drawCard={drawCard} cardSum={cardSum} />}
     </div>
   );
 };

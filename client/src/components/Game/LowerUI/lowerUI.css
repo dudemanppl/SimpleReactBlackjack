@@ -4,20 +4,21 @@
   justify-content: space-around;
 }
 
-.button {
+.lowerText {
   font-family: sans-serif;
   -webkit-text-fill-color: white;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: black;
   text-align: center;
-  /* min-width: 250px; */
-  color: white;
   font-size: 90px;
-  text-shadow: 3px 3px 6px black;
-  /* margin: 20px 50px; */
+  text-shadow: 3px 3px 0px black;
+  font-weight: bold;
+}
+
+.animated {
   transition: all 0.14s ease-in-out;
 }
 
-.button:hover {
+.animated:hover {
   transform: scale(1.1);
 }

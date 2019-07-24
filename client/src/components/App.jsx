@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './app.css';
-import Splash from '../components/Splash/Splash.jsx';
+// import Splash from '../components/Splash/Splash.jsx';
 import Game from '../components/Game/Game.jsx';
 
 const App = () => {
@@ -14,9 +14,9 @@ const App = () => {
 
   return (
     <div className={styles.appContainer}>
-      <div>Welcome back {username}!</div>
+      {/* <div>Welcome back {username}!</div> */}
       <Game />
-      {!hasUser && <Splash setHasUser={setHasUser} />}
+      {/* {!hasUser && <Splash setHasUser={setHasUser} />} */}
     </div>
   );
 };

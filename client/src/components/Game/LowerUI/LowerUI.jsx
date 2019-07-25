@@ -2,21 +2,23 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './lowerUI.css';
 
-const LowerUI = ({ drawCard, cardSum }) => {
+const LowerUI = ({ drawCard, userCardSum, setUserDeck, userDeck, dealer }) => {
   return (
     <div>
-      {cardSum <= 21 ? (
+      {userCardSum <= 21 ? (
         <div className={styles.buttonContainer}>
           <div
             className={classNames(styles.lowerText, styles.animated)}
-            onClick={() => drawCard(1)}
+            onClick={() => drawCard(1, userDeck).then(deck => setUserDeck(deck))}
           >
             Hit
           </div>
-          <div className={classNames(styles.lowerText, styles.animated)}>Stand</div>
+          <div className={classNames(styles.lowerText, styles.animated)} onClick={dealer}>
+            Stand
+          </div>
         </div>
       ) : (
-        <div className={classNames(styles.lowerText, styles.bust)}>Bust!</div>
+        <div className={styles.lowerText}>Bust!</div>
       )}
     </div>
   );

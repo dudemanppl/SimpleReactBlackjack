@@ -4,7 +4,7 @@ import styles from './app.css';
 import Game from '../components/Game/Game.jsx';
 
 const App = () => {
-  // testing some ideas of local persistance of user/deck_id to continue the game 
+  // testing some ideas of local persistance of user/deck_id to continue the game
 
   // const [hasUser, setHasUser] = useState(true);
   // const username = localStorage.getItem('username');
@@ -16,8 +16,6 @@ const App = () => {
 
   return (
     <div className={styles.appContainer}>
-      {' '}
-      */}
       {/* 
       // testing persistance of user and deck ID
       <div>Welcome back {username}!</div>

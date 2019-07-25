@@ -6,7 +6,7 @@ const Cards = ({ userDeck }) => {
   return (
     <div className={styles.cardsContainer}>
       {userDeck.map(card => {
-        return <Card card={card} key={card.value} />;
+        return <Card card={card} key={card.image} />;
       })}
     </div>
   );

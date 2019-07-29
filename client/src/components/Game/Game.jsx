@@ -22,22 +22,21 @@ const Game = () => {
     });
   };
 
-  // makes api call to get a certain amount of cards, returns data wrangled array with image and value, runs callback to set deck
-  const drawCard = (num, deck) => {
-    return new Promise(resolve => {
-      axios.get(`${deckOfCardsAPIURL}/${deckID}/draw/?count=${num}`).then(({ data }) => {
-        const cards = data.cards.map(card => {
-          return { image: card.image, value: card.value };
-        });
-        resolve([...deck, ...cards]);
-      });
+  // makes api call to get a certain amount of cards, returns concatenated array
+  const drawCard = (num, deck = []) => {
+    return new Promise(async resolve => {
+      const {
+        data: { cards }
+      } = await axios.get(`${deckOfCardsAPIURL}/${deckID}/draw/?count=${num}`);
+
+      resolve([...deck, ...cards.map(({ image, value }) => ({ image, value }))]);
     });
   };
 
   // returns a number of current sum of players card
   const getCardSum = deck => {
-    return new Promise(resolve => {
-      const sum = deck.reduce((acc, card) => {
+    return new Promise(async resolve => {
+      const sum = await deck.reduce((acc, card) => {
         const { value } = card;
 
         if (value === 'JACK' || value === 'QUEEN' || value === 'KING') {
@@ -55,49 +54,38 @@ const Game = () => {
   };
 
   // sets conditonal rendering of game to show up, draws 2 cards from the deck
-  const startNewGame = () => {
+  const startNewGame = async () => {
     setGameStart(true);
-    drawCard(2, userDeck).then(newDeck => {
-      setUserDeck(newDeck);
-    });
+    const newDeck = await drawCard(2, userDeck);
+    setUserDeck(newDeck);
   };
 
   // very rudimentary dealer logic...
-  const dealer = () => {
-    let dealerCardSum = 0;
-    let dealerDeck = [];
+  const dealer = async () => {
+    let dealerDeck = await drawCard(2);
+    let dealerCardSum = await getCardSum(dealerDeck);
 
-    const drawCardsAndSetSum = (numCards, d, s) => {
-      drawCard(numCards, d).then(deck => {
-        d = deck;
-        getCardSum(d).then(sum => (s = sum));
-      });
-    };
-
-    drawCardsAndSetSum(2, dealerDeck, dealerCardSum);
-    console.log(dealerDeck);
-    getCardSum(dealerDeck).then(sum => {
-      dealerCardSum = sum;
-      findWinner(dealerCardSum);
-    });
-
-    console.log(dealerCardSum);
-    // if ()
+    while (dealerCardSum >= 20) {
+      dealerDeck = await drawCard(1, dealerDeck);
+    }
+    const winner = await findWinner(dealerCardSum);
+    setRoundWinner(winner);
   };
 
   const findWinner = dealerCardSum => {
-    if (dealerCardSum <= 21) {
-      if (dealerCardSum > userCardSum) {
-        setRoundWinner('Dealer');
-      } else if (dealerCardSum < userCardSum) {
-        setRoundWinner('User');
+    return new Promise(resolve => {
+      if (dealerCardSum <= 21) {
+        if (dealerCardSum > userCardSum) {
+          resolve('Dealer');
+        } else if (dealerCardSum < userCardSum) {
+          resolve('User');
+        } else {
+          resolve('Draw');
+        }
       } else {
-        setRoundWinner('Draw');
+        resolve('User');
       }
-    } else {
-      setRoundWinner('User');
-    }
-    // console.log(roundWinner);
+    });
   };
 
   // gets new deck on new game

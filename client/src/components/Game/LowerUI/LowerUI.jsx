@@ -5,7 +5,7 @@ import styles from './lowerUI.css';
 const LowerUI = ({ drawCard, userCardSum, setUserDeck, userDeck, dealer }) => {
   return (
     <div>
-      {userCardSum ? (
+      {userCardSum <= 21 ? (
         <div className={styles.buttonContainer}>
           <div
             className={classNames(styles.lowerText, styles.animated)}

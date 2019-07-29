@@ -8,10 +8,10 @@ import Cards from './Cards/Cards.jsx';
 const Game = () => {
   const [deckID, setDeckID] = useState('new');
   const [userDeck, setUserDeck] = useState([]);
-  const [dealerDeck, setDealerDeck] = useState([]);
+  // const [dealerDeck, setDealerDeck] = useState([]);
   const [gameStart, setGameStart] = useState(false);
   const [userCardSum, setUserCardSum] = useState(0);
-  const [dealerCardSum, setDealerCardSum] = useState(0);
+  // const [dealerCardSum, setDealerCardSum] = useState(0);
   const [roundWinner, setRoundWinner] = useState('');
   const deckOfCardsAPIURL = 'https://deckofcardsapi.com/api/deck';
 
@@ -64,20 +64,28 @@ const Game = () => {
 
   // very rudimentary dealer logic...
   const dealer = () => {
-    drawCard(2, dealerDeck).then(deck => {
-      setDealerDeck(deck);
+    let dealerCardSum = 0;
+    let dealerDeck = [];
+
+    const drawCardsAndSetSum = (numCards, d, s) => {
+      drawCard(numCards, d).then(deck => {
+        d = deck;
+        getCardSum(d).then(sum => (s = sum));
+      });
+    };
+
+    drawCardsAndSetSum(2, dealerDeck, dealerCardSum);
+    console.log(dealerDeck);
+    getCardSum(dealerDeck).then(sum => {
+      dealerCardSum = sum;
+      findWinner(dealerCardSum);
     });
-    // if (dealerCardSum >= 20) {
-    //   findWinner();
-    // } else {
-    //   // while (dealerCardSum < 20) {
-    //   //   drawCard(1, setDealerDeck, dealerDeck);
-    //   // }
-    //   findWinner();
-    // }
+
+    console.log(dealerCardSum);
+    // if ()
   };
 
-  const findWinner = () => {
+  const findWinner = dealerCardSum => {
     if (dealerCardSum <= 21) {
       if (dealerCardSum > userCardSum) {
         setRoundWinner('Dealer');
@@ -89,6 +97,7 @@ const Game = () => {
     } else {
       setRoundWinner('User');
     }
+    // console.log(roundWinner);
   };
 
   // gets new deck on new game
@@ -100,13 +109,6 @@ const Game = () => {
       setUserCardSum(sum);
     });
   }, [userDeck]);
-
-  useEffect(() => {
-    getCardSum(dealerDeck).then(sum => {
-      setDealerCardSum(sum);
-    });
-    console.log(dealerCardSum);
-  }, [dealerDeck]);
 
   return (
     <div className={styles.gameContainer}>

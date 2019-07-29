@@ -1,4 +1,6 @@
 .cardsContainer {
   display: flex;
-  flex-direction: row;
+  position: relative;
+  left: -30px;
+  max-width: 700px;
 }

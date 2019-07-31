@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './game.css';
+import { gameContainer } from './game.css';
 import GameSplash from './GameSplash/GameSplash.jsx';
 import LowerUI from './LowerUI/LowerUI.jsx';
 import Cards from './Cards/Cards.jsx';
@@ -8,18 +8,30 @@ import Cards from './Cards/Cards.jsx';
 const Game = () => {
   const [deckID, setDeckID] = useState('new');
   const [userDeck, setUserDeck] = useState([]);
-  // const [dealerDeck, setDealerDeck] = useState([]);
   const [gameStart, setGameStart] = useState(false);
   const [userCardSum, setUserCardSum] = useState(0);
-  // const [dealerCardSum, setDealerCardSum] = useState(0);
   const [roundWinner, setRoundWinner] = useState('');
   const deckOfCardsAPIURL = 'https://deckofcardsapi.com/api/deck';
 
-  const getNewDeck = () => {
-    const newDeckURL = `${deckOfCardsAPIURL}/new/shuffle/`;
-    axios.get(newDeckURL).then(({ data }) => {
-      setDeckID(data['deck_id']);
-    });
+  // gets new deck on new game
+  useEffect(() => {
+    getNewDeck();
+  }, []);
+
+  // runs sum checker every time userDeck is updated
+  useEffect(() => {
+    const setSum = async () => {
+      const sum = await getCardSum(userDeck);
+      setUserCardSum(sum);
+    };
+    setSum();
+  }, [userDeck]);
+
+  const getNewDeck = async () => {
+    const newDeckURL = `${deckOfCardsAPIURL}/new/`;
+    const { data } = await axios.get(newDeckURL);
+    const newDeckID = await data['deck_id'];
+    setDeckID(newDeckID);
   };
 
   // makes api call to get a certain amount of cards, returns concatenated array
@@ -55,8 +67,9 @@ const Game = () => {
 
   // sets conditonal rendering of game to show up, draws 2 cards from the deck
   const startNewGame = async () => {
+    setRoundWinner('');
     setGameStart(true);
-    const newDeck = await drawCard(2, userDeck);
+    const newDeck = await drawCard(2);
     setUserDeck(newDeck);
   };
 
@@ -88,18 +101,8 @@ const Game = () => {
     });
   };
 
-  // gets new deck on new game
-  useEffect(() => getNewDeck(), []);
-
-  // runs sum checker every time userDeck is updated
-  useEffect(() => {
-    getCardSum(userDeck).then(sum => {
-      setUserCardSum(sum);
-    });
-  }, [userDeck]);
-
   return (
-    <div className={styles.gameContainer}>
+    <div className={gameContainer}>
       <Cards userDeck={userDeck} />
       {!gameStart && <GameSplash startNewGame={startNewGame} />}
       {gameStart && (
@@ -109,6 +112,8 @@ const Game = () => {
           userDeck={userDeck}
           setUserDeck={setUserDeck}
           dealer={dealer}
+          startNewGame={startNewGame}
+          roundWinner={roundWinner}
         />
       )}
     </div>

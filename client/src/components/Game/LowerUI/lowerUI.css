@@ -1,7 +1,15 @@
 .buttonContainer {
-  width: 500px;
+  height: 150px;
   display: flex;
   justify-content: space-around;
+}
+
+.buttonContainer.options {
+  flex-direction: column;
+}
+
+.button {
+  margin: 20px;
 }
 
 .lowerText {
@@ -15,10 +23,20 @@
   font-weight: bold;
 }
 
+.lowerText.options {
+  font-size: 40px;
+  -webkit-text-stroke-width: 1px;
+}
+
 .animated {
   transition: all 0.14s ease-in-out;
 }
 
 .animated:hover {
   transform: scale(1.1);
+}
+
+.animated:active {
+  -webkit-text-fill-color: rgb(230, 230, 230);
+  text-shadow: none;
 }

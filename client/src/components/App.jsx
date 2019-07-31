@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './app.css';
+import { appContainer } from './app.css';
 // import Splash from '../components/Splash/Splash.jsx';
 import Game from '../components/Game/Game.jsx';
 
@@ -15,7 +15,7 @@ const App = () => {
   // }, []);
 
   return (
-    <div className={styles.appContainer}>
+    <div className={appContainer}>
       {/* 
       // testing persistance of user and deck ID
       <div>Welcome back {username}!</div>

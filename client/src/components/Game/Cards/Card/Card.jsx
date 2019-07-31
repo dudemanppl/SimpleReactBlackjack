@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './card.css';
+import { cardContainer, card } from './card.css';
 
 const Card = ({ card: { image } }) => {
   return (
-    <div className={styles.cardContainer}>
-      <img className={styles.card} src={image} />
+    <div className={cardContainer}>
+      <img className={card} src={image} />
     </div>
   );
 };

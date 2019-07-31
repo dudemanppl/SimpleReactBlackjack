@@ -7,16 +7,12 @@ import Cards from './Cards/Cards.jsx';
 
 const Game = () => {
   const [deckID, setDeckID] = useState('new');
+  const [cardCount, setCardCount] = useState(52);
   const [userDeck, setUserDeck] = useState([]);
   const [gameStart, setGameStart] = useState(false);
   const [userCardSum, setUserCardSum] = useState(0);
   const [roundWinner, setRoundWinner] = useState('');
   const deckOfCardsAPIURL = 'https://deckofcardsapi.com/api/deck';
-
-  // gets new deck on new game
-  useEffect(() => {
-    getNewDeck();
-  }, []);
 
   // runs sum checker every time userDeck is updated
   useEffect(() => {
@@ -28,20 +24,24 @@ const Game = () => {
   }, [userDeck]);
 
   const getNewDeck = async () => {
+    setGameStart(true);
     const newDeckURL = `${deckOfCardsAPIURL}/new/`;
     const { data } = await axios.get(newDeckURL);
     const newDeckID = await data['deck_id'];
+
     setDeckID(newDeckID);
+
+    const newDeck = await drawCard(2, [], newDeckID);
+
+    setUserDeck(newDeck);
   };
 
   // makes api call to get a certain amount of cards, returns concatenated array
-  const drawCard = (num, deck = []) => {
+  const drawCard = (num, deck = [], id = deckID) => {
     return new Promise(async resolve => {
-      const {
-        data: { cards }
-      } = await axios.get(`${deckOfCardsAPIURL}/${deckID}/draw/?count=${num}`);
-
-      resolve([...deck, ...cards.map(({ image, value }) => ({ image, value }))]);
+      const { data } = await axios.get(`${deckOfCardsAPIURL}/${id}/draw/?count=${num}`);
+      setCardCount(data.remaining);
+      resolve([...deck, ...data.cards.map(({ image, value }) => ({ image, value }))]);
     });
   };
 
@@ -65,10 +65,8 @@ const Game = () => {
     });
   };
 
-  // sets conditonal rendering of game to show up, draws 2 cards from the deck
   const startNewGame = async () => {
     setRoundWinner('');
-    setGameStart(true);
     const newDeck = await drawCard(2);
     setUserDeck(newDeck);
   };
@@ -104,7 +102,7 @@ const Game = () => {
   return (
     <div className={gameContainer}>
       <Cards userDeck={userDeck} />
-      {!gameStart && <GameSplash startNewGame={startNewGame} />}
+      {!gameStart && <GameSplash getNewDeck={getNewDeck} />}
       {gameStart && (
         <LowerUI
           drawCard={drawCard}
@@ -114,6 +112,8 @@ const Game = () => {
           dealer={dealer}
           startNewGame={startNewGame}
           roundWinner={roundWinner}
+          cardCount={cardCount}
+          getNewDeck={getNewDeck}
         />
       )}
     </div>

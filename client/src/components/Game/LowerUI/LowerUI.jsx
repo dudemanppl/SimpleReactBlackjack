@@ -9,11 +9,13 @@ const LowerUI = ({
   userDeck,
   dealer,
   startNewGame,
-  roundWinner
+  roundWinner,
+  cardCount,
+  getNewDeck
 }) => {
   return (
     <div>
-      {userCardSum <= 21 && !roundWinner && (
+      {userCardSum <= 21 && !roundWinner && cardCount > 2 && (
         <div className={buttonContainer}>
           <div
             className={classNames(lowerText, animated, button)}
@@ -44,6 +46,14 @@ const LowerUI = ({
           <div className={lowerText}>{`${roundWinner} has won!`}</div>
           <div className={classNames(animated, lowerText, options)} onClick={startNewGame}>
             Draw again
+          </div>
+        </div>
+      )}
+      {cardCount < 3 && (
+        <div className={classNames(buttonContainer, options)}>
+          <div className={lowerText}>No more cards left in deck</div>
+          <div className={classNames(animated, lowerText, options)} onClick={getNewDeck}>
+            Draw new deck
           </div>
         </div>
       )}
